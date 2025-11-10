@@ -159,7 +159,6 @@ void tabulate(void)
             candidates[preferences[i][j]].votes++;
         }
     }
-    return;
 }
 
 // Print the winner of the election, if there is one
