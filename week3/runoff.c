@@ -184,7 +184,6 @@ bool print_winner(void)
 // Return the minimum number of votes any remaining candidate has
 int find_min(void)
 {
-    // TODO
     int min_votes = 0;
 
     for (int i = 0; i < candidate_count; i++)
@@ -202,7 +201,6 @@ int find_min(void)
 // Return true if the election is tied between all candidates, false otherwise
 bool is_tie(int min)
 {
-    // TODO
     for (int i = 0; i < candidate_count; i++)
     {
         // 落選していないすべての候補者の投票数が同じでない場合
@@ -219,7 +217,6 @@ bool is_tie(int min)
 // Eliminate the candidate (or candidates) in last place
 void eliminate(int min)
 {
-    // TODO
     for (int i = 0; i < candidate_count; i++)
     {
         // 落選していないすべての候補者において、最低得票数の候補者を排除
