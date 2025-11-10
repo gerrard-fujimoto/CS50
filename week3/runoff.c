@@ -165,7 +165,6 @@ void tabulate(void)
 // Print the winner of the election, if there is one
 bool print_winner(void)
 {
-    // TODO
     for (int i = 0; i < candidate_count; i++)
     {
         // 候補者の得票数が過半数越えで選挙の勝者が存在する場合
