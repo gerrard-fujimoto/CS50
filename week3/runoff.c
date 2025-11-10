@@ -127,7 +127,6 @@ int main(int argc, string argv[])
 // Record preference if vote is valid
 bool vote(int voter, int rank, string name)
 {
-    // TODO
     // 投票者の入力が有効かを確認
     bool is_exist = false;
     for (int i = 0; i < candidate_count; i++)
@@ -152,7 +151,6 @@ bool vote(int voter, int rank, string name)
 // Tabulate votes for non-eliminated candidates
 void tabulate(void)
 {
-    // TODO
     for (int i = 0; i < voter_count; i++)
     {
         for (int j = 0;  j < candidate_count; j++)
