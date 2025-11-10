@@ -132,8 +132,8 @@ bool vote(int voter, int rank, string name)
         // 投票者の入力が有効の場合
         if (candidates[i].name == name)
         {
-            preferences[voter][rank] = rank;
-
+            // 投票者の選好配列に候補者のナンバーを保持
+            preferences[voter][rank] = i;
             return true;
         }
     }
@@ -149,14 +149,14 @@ void tabulate(void)
     {
         for (int j = 0;  j < candidate_count; j++)
         {
-            // 落選者には投票できないため、次点で落選していない最優先候補者の候補者に投票する
-            if (candidates[preferences[i][j]].eliminated)
-            {
-                break;
-            }
+            int candidate_num = preferences[i][j];
 
-            // 落選していなければそのまま投票
-            candidates[preferences[i][j]].votes++;
+            // 候補者が落選していない場合
+            if (!candidates[candidate_num].eliminated)
+            {
+                candidates[candidate_num].votes++;
+                break; // 投票確定、次の投票者へ
+            }
         }
     }
 }
@@ -164,13 +164,15 @@ void tabulate(void)
 // Print the winner of the election, if there is one
 bool print_winner(void)
 {
+    // 投票の過半数を算出
+    int majority_votes = voter_count / 2 + 1;
+
     for (int i = 0; i < candidate_count; i++)
     {
         // 候補者の得票数が過半数越えで選挙の勝者が存在する場合
-        if (candidates[i].votes > (int) voter_count / 2)
+        if (candidates[i].votes > majority_votes)
         {
             printf("%s\n", candidates[i].name);
-
             return true;
         }
     }
