@@ -130,7 +130,7 @@ bool vote(int voter, int rank, string name)
     for (int i = 0; i < candidate_count; i++)
     {
         // 投票者の入力が有効の場合
-        if (candidates[i].name == name)
+        if (strcmp(candidates[i].name, name) == 0)
         {
             // 投票者の選好配列に候補者のナンバーを保持
             preferences[voter][rank] = i;
@@ -225,5 +225,4 @@ void eliminate(int min)
             candidates[i].eliminated = true;
         }
     }
-    return;
 }
