@@ -127,24 +127,18 @@ int main(int argc, string argv[])
 // Record preference if vote is valid
 bool vote(int voter, int rank, string name)
 {
-    // 投票者の入力が有効かを確認
-    bool is_exist = false;
     for (int i = 0; i < candidate_count; i++)
     {
+        // 投票者の入力が有効の場合
         if (candidates[i].name == name)
         {
-            is_exist = true; // 投票者の投票が有効の場合
+            preferences[voter][rank] = rank;
+
+            return true;
         }
     }
 
-    if (!is_exist)
-    {
-        // fixme nameではなくnameがある配列の順番のintを代入するようにする
-        preferences[voter][rank] = rank;
-
-        return true;
-    }
-
+    // 投票者の入力が無効の場合
     return false;
 }
 
