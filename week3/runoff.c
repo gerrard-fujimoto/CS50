@@ -206,7 +206,7 @@ bool is_tie(int min)
     for (int i = 0; i < candidate_count; i++)
     {
         // 落選していないすべての候補者の投票数が同じでない場合
-        if (candidates[i].votes != min && candidates[i].eliminated == false)
+        if (candidates[i].votes != min && !candidates[i].eliminated)
         {
             return false;
         }
@@ -222,7 +222,7 @@ void eliminate(int min)
     for (int i = 0; i < candidate_count; i++)
     {
         // 落選していないすべての候補者において、最低得票数の候補者を排除
-        if (candidates[i].votes == min && candidates[i].eliminated == false)
+        if (candidates[i].votes == min && !candidates[i].eliminated)
         {
             candidates[i].eliminated = true;
         }
