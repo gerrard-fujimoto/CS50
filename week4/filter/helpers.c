@@ -111,7 +111,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             // 自身を含んだ3*3の範囲のピクセル情報を取得
             for (int di = -1; di <= 1; di++)
             {
-                for (int dj = -1; dj < 3; dj++)
+                for (int dj = -1; dj <= 1; dj++)
                 {
                     // チェック対象のピクセルの座標・ぼかすピクセルの左上からスタート
                     int ni = i + di;

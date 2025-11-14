@@ -58,32 +58,38 @@ int main(int argc, char *argv[])
         (buffer[3] & FOURTH_BYTE_MASK) == JPG_MARKER_START) // 4つ目のバイトの値が0xe0~0xefのレンジ内であるか
         {
             // 2回目以降に新しいjpgファイルが見つかった時
-            if (file_count > 0)
+            if (is_opened)
             {
-                // ファイルを閉じる
                 fclose(jpg_file);
                 is_opened = false;
             }
 
-            if (sprintf(filename, "%03i.jpg", file_count) == FILE_NAME_BYTE -1)
+            // ファイル名が###.jpgになっていない場合
+            int bytes_written = snprintf(filename, FILE_NAME_BYTE, "%03i.jpg", file_count);
+            if (bytes_written < 0 ||
+            bytes_written >= FILE_NAME_BYTE)
             {
-                // jpgファイルを書き込み権限で開いておく
-                jpg_file = fopen(filename, "w");
-
-                // 新規jpgファイルの生成が成功したら、ファイル名の数字を更新
-                file_count++;
-
-                // ファイルが開いた状態にしておく
-                is_opened = true;
-
-                // jpgファイルが開けない場合
-                if (jpg_file == NULL)
-                {
-                    return 1;
-                }
-
-                fwrite(buffer, BLOCK_SIZE, 1, jpg_file);
+                fclose(raw_file);
+                return 1;
             }
+
+            // jpgファイルを書き込み権限で開いておく
+            jpg_file = fopen(filename, "w");
+
+            // 新規jpgファイルの生成が成功したら、ファイル名の数字を更新
+            file_count++;
+
+            // ファイルが開いた状態にしておく
+            is_opened = true;
+
+            // jpgファイルが開けない場合
+            if (jpg_file == NULL)
+            {
+                fclose(raw_file);
+                return 1;
+            }
+
+            fwrite(buffer, BLOCK_SIZE, 1, jpg_file);
         }
         else
         {
@@ -101,4 +107,8 @@ int main(int argc, char *argv[])
     {
         fclose(jpg_file);
     }
+
+    // ファイルを閉じて正常終了
+    fclose(raw_file);
+    return 0;
 }
